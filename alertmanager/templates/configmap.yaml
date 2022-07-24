@@ -22,9 +22,9 @@ data:
            match_re:
              severity: critical|warning
            continue: true
-     receivers:
-      - name: "slack"
-        slack_configs:
-          - send_resolved: true
-            channel: '#notifications'
-            text: "{{ "{{" }} range .Alerts {{ "}}" }}<!channel> {{ "{{" }} .Annotations.summary {{ "}}" }}\n{{ "{{" }} .Annotations.description }}\n{{ "{{" }} end {{ "}}" }}"
+    receivers:
+     - name: "slack"
+       slack_configs:
+         - send_resolved: true
+           channel: '#notifications'
+           text: "{{ "{{" }} range .Alerts {{ "}}" }}<!channel> {{ "{{" }} .Annotations.summary {{ "}}" }}\n{{ "{{" }} .Annotations.description }}\n{{ "{{" }} end {{ "}}" }}"
