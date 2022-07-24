@@ -16,7 +16,7 @@ spec:
         app: alertmanager
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/port: "8880"
+        prometheus.io/port: "9093"
     spec:
       terminationGracePeriodSeconds: 30
       automountServiceAccountToken: false
@@ -42,4 +42,3 @@ spec:
           name: alertmanager
       - name: alertmanager
         emptyDir: {}
-

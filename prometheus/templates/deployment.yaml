@@ -43,12 +43,12 @@ spec:
         ports:
           - containerPort: 9090
         volumeMounts:
-        {{- range $path, $bytes := .Files.Glob ( printf "rules/**.rules") }}
+        {{- range $path, $bytes := .Files.Glob ( printf "rules/**.yaml") }}
         {{- $name := base $path }}
         - name: prometheus-rules
           mountPath: {{- printf "/config/%s" $name | indent 1 }}
           subPath: {{- printf "%s" $name | indent 1 }}
-         {{- end }}
+        {{- end }}
         - name: timezone-moscow
           mountPath: /etc/localtime
           readOnly: true

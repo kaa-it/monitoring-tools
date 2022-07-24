@@ -20,4 +20,4 @@ spec:
           service:
             name: alertmanager
             port:
-              number: 8080
+              number: 9093
