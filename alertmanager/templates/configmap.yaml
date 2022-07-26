@@ -26,5 +26,5 @@ data:
      - name: "slack"
        slack_configs:
          - send_resolved: true
-           channel: '#dvs_NN_notifications'
+           channel: '{{ .Values.slack_channel }}'
            text: "{{ "{{" }} range .Alerts {{ "}}" }}{{ "{{" }} .Annotations.summary {{ "}}" }}\n{{ "{{" }} .Annotations.description }}\n{{ "{{" }} end {{ "}}" }}"
