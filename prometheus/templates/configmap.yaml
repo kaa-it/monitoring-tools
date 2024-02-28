@@ -11,6 +11,13 @@ data:
     global:
       scrape_interval: 10s
       scrape_timeout: 10s
+    alerting:
+      alertmanagers:
+      - scheme: http
+        static_configs:
+        - targets:
+          - "alertmanager:9093"
+            
     rule_files:
        - "/config/*"
     scrape_configs:

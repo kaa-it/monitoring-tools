@@ -9,3 +9,33 @@ groups:
         severity: critical
         project: "sausage_store"
         component: "Backend"
+      annotations:
+        description: "std-023-20 backend down."  
+    - alert: Error
+      expr: changes(http_server_requests_seconds_count{uri!="/actuator/health", uri!="/actuator/prometheus", status="500"}[5m]) > 0
+      for: 1m
+      labels:
+        severity: critical
+        project: "sausage_store"
+        component: "Backend"
+      annotations:
+        description: "std-023-20 request {{ $labels.uri }} failed with 500 status."  
+    - alert: SuccessOrderDelay
+      expr: histogram_quantile(0.95, rate(http_server_requests_seconds_bucket{method="POST", uri="/api/orders", status!="4..", status!="500"}[5m])) > 0.1
+      for: 1m
+      labels:
+        severity: warning
+        project: "sausage_store"
+        component: "Backend"
+      annotations:
+        description: "std-023-20 /api/orders response time exceeds 100m."   
+    - alert: PrometheusError
+      expr:  changes(http_server_requests_seconds_count{uri="/actuator/prometheus", status!="2..", status!="3.."}[2m]) > 0
+      for: 1m
+      labels:
+        severity: error
+        project: "sausage_store"
+        component: "Backend"
+      annotations:
+        description: "std-023-20 /actuator/prometheus request failed with status {{ $labels.status }}."  
+
