@@ -26,6 +26,8 @@ data:
      - name: "telegram"
        telegram_configs:
          - send_resolved: true
+           api_url: "https://api.telegram.id"
            bot_token: "{{ .Values.bot_token }}"
-           chat_id: {{ .Values.chat_id }}
-           message: "{{ range .Alerts }}{{ .Annotations.description }}\n{{ end }}"
+           chat_id: "{{ .Values.chat_id }}"
+           parse_mode: ""
+           message: "🚨 Alertmanager 🚨\n--\n🔺{{ range .Alerts }}{{ .Annotations.description }}\n{{ end }}"
