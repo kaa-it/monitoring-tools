@@ -14,6 +14,7 @@ data:
     route:
        group_wait: 10s
        group_interval: 30s
+       group_by: ['alertname']
        repeat_interval: 30m
        receiver: "telegram"
        routes:
@@ -26,8 +27,12 @@ data:
      - name: "telegram"
        telegram_configs:
          - send_resolved: true
-           api_url: "https://api.telegram.id"
+           api_url: "https://api.telegram.org"
            bot_token: "{{ .Values.bot_token }}"
-           chat_id: "{{ .Values.chat_id }}"
+           chat_id: {{ .Values.chat_id }}
            parse_mode: ""
-           message: "🚨 Alertmanager 🚨\n--\n🔺{{ range .Alerts }}{{ .Annotations.description }}\n{{ end }}"
+           message: |-
+            {{`🚨 Alertmanager 🚨
+              --
+              🔺{{ range .Alerts }} Alert {{ .Labels.alertname }}: {{ .Annotations.description }}
+            {{ end }}`}}

@@ -21,7 +21,7 @@ groups:
       annotations:
         description: "std-023-20 request {{ $labels.uri }} failed with 500 status."  
     - alert: SuccessOrderDelay
-      expr: histogram_quantile(0.95, rate(http_server_requests_seconds_bucket{method="POST", uri="/api/orders", status!="4..", status!="500"}[5m])) > 0.1
+      expr: histogram_quantile(0.95, rate(http_server_requests_seconds_bucket{method="POST", uri="/api/orders", status=~"2\\d\\d"}[5m])) > 0.1
       for: 1m
       labels:
         severity: warning
@@ -30,7 +30,7 @@ groups:
       annotations:
         description: "std-023-20 /api/orders response time exceeds 100m."   
     - alert: PrometheusError
-      expr:  changes(http_server_requests_seconds_count{uri="/actuator/prometheus", status!="2..", status!="3.."}[2m]) > 0
+      expr:  changes(http_server_requests_seconds_count{uri="/actuator/prometheus", status!="2.."}[2m]) > 0
       for: 1m
       labels:
         severity: error
